@@ -3,170 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geometric Design Portfolio</title>
-    <!-- Google Fonts: 洗練されたサンセリフ体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300&display=swap" rel="stylesheet">
+    <title>Shymohn | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&family=Noto+Sans+JP:wght@300;500&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
-            --bg-color: #ffffff;
-            --line-color: #333333;
-            --text-color: #333333;
-            --font-main: 'Inter', sans-serif;
+            --bg-color: #FDFCFB; /* アイコンの背景に近い色 */
+            --accent-red: #8C2132;
+            --accent-navy: #1A2D4F;
+            --main-black: #1A1A1A;
+            --text-gray: #555;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            margin: 0; padding: 0;
             background-color: var(--bg-color);
-            font-family: var(--font-main);
-            color: var(--text-color);
+            color: var(--main-black);
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
         }
 
-        .container {
-            position: relative;
-            width: 100vw;
+        /* --- Hero Section --- */
+        .hero {
             height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 背景の幾何学ライン */
+        .bg-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* アイコン表示エリア */
+        .icon-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            z-index: 2;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* 背景のSVG */
-        svg {
-            position: absolute;
+        .icon-image {
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            object-fit: contain;
+            /* 描画アニメーション用のマスク設定 */
+            clip-path: inset(0% 0% 100% 0%); 
         }
 
-        .line-main {
-            fill: none;
-            stroke: var(--line-color);
-            stroke-width: 0.8;
+        .name-title {
+            margin-top: 30px;
+            text-align: center;
+            z-index: 2;
         }
 
-        .line-dashed {
-            fill: none;
-            stroke: var(--line-color);
-            stroke-width: 0.5;
-            stroke-dasharray: 4 4;
+        .name-title h1 {
+            font-weight: 200;
+            letter-spacing: 0.5em;
+            font-size: 24px;
+            margin: 0;
+            text-transform: uppercase;
         }
 
-        /* テキスト要素 */
-        .label {
+        /* --- Profile Section --- */
+        .profile-section {
+            padding: 100px 10% 150px;
+            max-width: 900px;
+            margin: 0 auto;
+            border-top: 1px solid #eee;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-grid { grid-template-columns: 1fr; }
+        }
+
+        .profile-label {
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            color: var(--accent-navy);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .bio-text {
+            font-size: 15px;
+            line-height: 2;
+            color: var(--text-gray);
+        }
+
+        .award-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .award-tag {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .award-tag.gold { border-left: 4px solid #FFD700; }
+        .award-tag.silver { border-left: 4px solid #C0C0C0; }
+        .award-tag.blue { border-left: 4px solid #007BFF; }
+
+        .scroll-hint {
             position: absolute;
+            bottom: 30px;
             font-size: 10px;
             letter-spacing: 0.3em;
-            text-transform: uppercase;
-            white-space: nowrap;
-            opacity: 0;
+            animation: bounce 2s infinite;
         }
 
-        /* 各配置 */
-        .top { top: 5%; }
-        .bottom { bottom: 5%; }
-        .left { left: 5%; }
-        .right { right: 5%; }
-        
-        .inner-left { transform: translateX(-220px); }
-        .inner-right { transform: translateX(220px); }
-        
-        .center-top { transform: translateY(-70px); font-size: 9px; }
-        .center-bottom { transform: translateY(70px); font-size: 9px; }
-
-        #center-dot {
-            width: 12px;
-            height: 12px;
-            background-color: black;
-            border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 0 0 1px black;
-            z-index: 10;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-3px);}
         }
     </style>
 </head>
 <body>
 
-<div class="container" id="scene">
-    <!-- 幾何学ライン -->
-    <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
-        <!-- 同心円（点線） -->
-        <circle class="line-dashed" cx="500" cy="500" r="150" />
-        <circle class="line-dashed" cx="500" cy="500" r="350" />
-        
-        <!-- 中央の「目」のようなカーブ -->
-        <path id="curve-top" class="line-main" d="M 100 500 Q 500 400 900 500" />
-        <path id="curve-bottom" class="line-main" d="M 100 500 Q 500 600 900 500" />
-
-        <!-- 左右の大きな円弧 -->
-        <circle class="line-main" cx="100" cy="500" r="400" />
-        <circle class="line-main" cx="900" cy="500" r="400" />
+<section class="hero">
+    <svg class="bg-lines" viewBox="0 0 1000 1000">
+        <circle class="draw-line" cx="500" cy="500" r="300" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="5 5" />
+        <path class="draw-line" d="M 0 500 Q 500 400 1000 500" fill="none" stroke="#eee" stroke-width="1" />
+        <path class="draw-line" d="M 0 500 Q 500 600 1000 500" fill="none" stroke="#eee" stroke-width="1" />
     </svg>
 
-    <!-- 中央の点 -->
-    <div id="center-dot"></div>
+    <div class="icon-container">
+        <!-- あなたのアイコン画像 -->
+        <img src="icon.png" alt="Shymohn Icon" class="icon-image" id="mainIcon">
+    </div>
 
-    <!-- テキストラベル -->
-    <div class="label top">Motion Design</div>
-    <div class="label bottom">Web Development</div>
-    <div class="label left">Visual Design</div>
-    <div class="label right">Art Direction</div>
-    
-    <div class="label inner-left">Unique</div>
-    <div class="label inner-right">Refind</div>
-    
-    <div class="label center-top">Continuously Pursuing</div>
-    <div class="label center-bottom">Rebuilding Expression</div>
-</div>
+    <div class="name-title">
+        <h1 id="name">Shymohn</h1>
+        <p style="font-size: 10px; letter-spacing: 0.8em; color: var(--accent-red); margin-top: 10px;">@Shymohn</p>
+    </div>
+
+    <div class="scroll-hint">SCROLL</div>
+</section>
+
+<section class="profile-section">
+    <div class="profile-grid">
+        <div>
+            <div class="profile-label">Status</div>
+            <p class="bio-text">高2 / 東大（理一or理三）志望</p>
+            <div class="profile-label" style="margin-top: 30px;">Social</div>
+            <p class="bio-text">Twitter: @Shymohn</p>
+        </div>
+        
+        <div>
+            <div class="profile-label">Achievements & Awards</div>
+            <div class="award-list">
+                <span class="award-tag blue">INSO 日本代表</span>
+                <span class="award-tag blue">AtCoder A水 H青</span>
+                <span class="award-tag silver">AJL H 🥈</span>
+                <span class="award-tag blue">OMC 水</span>
+                <span class="award-tag gold">JOL '26 🥇</span>
+                <span class="award-tag">APLO '26</span>
+                <span class="award-tag">PCK 新人賞</span>
+                <span class="award-tag silver">県科学オリ 🥈</span>
+                <span class="award-tag">情報オリンピック 7th</span>
+                <span class="award-tag">東大特進</span>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script>
     window.onload = () => {
-        const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 2 } });
+        const tl = gsap.timeline({ defaults: { ease: "power4.inOut" } });
 
-        // 1. 線の描画アニメーション
-        gsap.set(".line-main, .line-dashed", { drawSVG: "0%" }); // drawSVGプラグインなしの代替
-        
-        tl.from("svg circle, svg path", {
+        // 1. 背景線の描画
+        tl.from(".draw-line", {
             strokeDasharray: "1000",
             strokeDashoffset: "1000",
-            duration: 3,
-            stagger: 0.2
-        })
-        
-        // 2. 中央の点とテキストをふわっと出す
-        .to(".label", {
-            opacity: 1,
-            stagger: 0.1,
-            duration: 1
-        }, "-=2")
-        
-        .from("#center-dot", {
-            scale: 0,
-            duration: 1
+            duration: 2,
+            stagger: 0.3
+        });
+
+        // 2. アイコンの「描画」アニメーション（下から上へスキャンするように表示）
+        tl.to("#mainIcon", {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 2.5,
+            ease: "power2.inOut"
         }, "-=1.5");
 
-        // 3. マウス追従のインタラクション
-        document.addEventListener("mousemove", (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            
-            gsap.to("#scene", {
-                x: x * 0.5,
-                y: y * 0.5,
-                duration: 1,
-                ease: "power2.out"
-            });
+        // 3. 名前の表示
+        tl.from("#name", {
+            y: 20,
+            opacity: 0,
+            duration: 1.5,
+            letterSpacing: "1.5em"
+        }, "-=1");
 
-            gsap.to("#center-dot", {
-                x: x,
-                y: y,
-                duration: 0.5,
-                ease: "power2.out"
-            });
+        // 4. プロフィール要素のスクロール連動表示
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.from(".award-tag", {
+            scrollTrigger: {
+                trigger: ".profile-section",
+                start: "top 80%",
+            },
+            y: 20,
+            opacity: 0,
+            stagger: 0.05,
+            duration: 1,
+            ease: "power3.out"
         });
     };
 </script>

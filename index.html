@@ -25,7 +25,9 @@
             scroll-behavior: smooth;
         }
 
-        /* --- Hero Section: Icon Drawing --- */
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        /* --- Hero Section --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -44,7 +46,6 @@
             align-items: center;
         }
 
-        /* アイコンを囲む動的な円 */
         .icon-svg-outline {
             position: absolute;
             top: 0; left: 0;
@@ -56,7 +57,7 @@
             fill: none;
             stroke: var(--main-black);
             stroke-width: 1;
-            stroke-dasharray: 628; /* 2 * PI * r */
+            stroke-dasharray: 628;
             stroke-dashoffset: 628;
         }
 
@@ -66,7 +67,6 @@
             border-radius: 4px;
             opacity: 0;
             transform: scale(0.9);
-            filter: grayscale(20%);
         }
 
         .name-area {
@@ -82,6 +82,37 @@
             margin: 0;
             text-transform: uppercase;
         }
+
+        /* ソーシャルリンク（Hero内） */
+        .social-links {
+            margin-top: 25px;
+            display: flex;
+            gap: 30px;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .social-link {
+            position: relative;
+            padding-bottom: 5px;
+            font-weight: 300;
+            color: #666;
+        }
+
+        .social-link::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0%;
+            height: 1px;
+            background: var(--main-black);
+            transition: width 0.4s ease;
+        }
+
+        .social-link:hover::after { width: 100%; }
+        .social-link:hover { color: var(--main-black); }
 
         /* --- Achievements Section --- */
         .section-container {
@@ -108,45 +139,45 @@
             background: var(--line-gray);
         }
 
-        /* 箇条書きリストのスタイル */
-        .achievement-list {
-            list-style: none;
-            padding: 0;
-        }
-
+        .achievement-list { list-style: none; padding: 0; }
         .achievement-item {
             display: flex;
             align-items: flex-start;
-            padding: 15px 0;
+            padding: 18px 0;
             border-bottom: 1px solid #f0f0f0;
             opacity: 0;
             transform: translateY(20px);
         }
 
-        .achievement-item:last-child { border-bottom: none; }
-
-        /* 文頭の記号を幾何学的に */
         .item-marker {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             border: 1px solid var(--main-black);
-            margin-right: 20px;
-            margin-top: 6px;
-            flex-shrink: 0;
-            transform: rotate(45deg);
+            margin-right: 20px; margin-top: 6px;
+            flex-shrink: 0; transform: rotate(45deg);
         }
 
-        .item-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #333;
-            letter-spacing: 0.05em;
+        .item-text { font-size: 15px; line-height: 1.6; color: #333; }
+        .highlight { font-weight: 400; color: var(--accent-red); margin-left: 8px; }
+
+        /* --- Footer --- */
+        footer {
+            padding: 100px 20px;
+            text-align: center;
+            border-top: 1px solid #f0f0f0;
+            background-color: #fafafa;
         }
 
-        .highlight {
-            font-weight: 400;
-            color: var(--accent-red);
-            margin-left: 8px;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .copyright {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: #aaa;
         }
 
         .scroll-down {
@@ -162,7 +193,6 @@
 
     <section class="hero">
         <div class="icon-wrapper">
-            <!-- アイコン描画用のSVG -->
             <svg class="icon-svg-outline" viewBox="0 0 210 210">
                 <circle cx="105" cy="105" r="100" />
             </svg>
@@ -171,7 +201,12 @@
 
         <div class="name-area" id="nameArea">
             <h1>Shymohn</h1>
-            <p style="font-size: 11px; letter-spacing: 0.2em; margin-top: 15px; color: #888;">High School Student / Competitor</p>
+            <div class="social-links" id="socialLinks">
+                <!-- リンク先を自分のURLに変更してください -->
+                <a href="https://atcoder.jp/users/Shymohn" target="_blank" class="social-link">ATCODER</a>
+                <a href="https://onlinemathcontest.com/users/Shymohn" target="_blank" class="social-link">OMC</a>
+                <a href="https://x.com/Shymohn" target="_blank" class="social-link">X (TWITTER)</a>
+            </div>
         </div>
 
         <div class="scroll-down">SCROLL</div>
@@ -187,11 +222,11 @@
             </li>
             <li class="achievement-item">
                 <div class="item-marker"></div>
-                <div class="item-text">JOL '26 <span class="highlight">金賞 (1st)</span></div>
+                <div class="item-text">JOL '26 <span class="highlight">金賞</span></div>
             </li>
             <li class="achievement-item">
                 <div class="item-marker"></div>
-                <div class="item-text">AtCoder <span class="highlight">最高青 / 現在水</span></div>
+                <div class="item-text">AtCoder <span class="highlight">Heuristic青 / Algorithm水</span></div>
             </li>
             <li class="achievement-item">
                 <div class="item-marker"></div>
@@ -203,55 +238,65 @@
             </li>
             <li class="achievement-item">
                 <div class="item-marker"></div>
-                <div class="item-text">APLO '26 / PCK 新人賞 / 県科学オリ 🥈</div>
+                <div class="item-text">情報科学の達人 <span class="highlight">7期生</span></div>
             </li>
             <li class="achievement-item">
                 <div class="item-marker"></div>
-                <div class="item-text">情報オリンピック (JOI) <span class="highlight">7th</span></div>
-            </li>
-            <li class="achievement-item">
-                <div class="item-marker"></div>
-                <div class="item-text">東大特進 / 理科一・三類志望</div>
+                <div class="item-text">東大理科一・三類志望 / 東大特進</div>
             </li>
         </ul>
     </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://atcoder.jp/users/Shymohn" target="_blank" class="social-link">AtCoder</a>
+            <a href="https://onlinemathcontest.com/users/Shymohn" target="_blank" class="social-link">OMC</a>
+            <a href="https://x.com/Shymohn" target="_blank" class="social-link">X</a>
+        </div>
+        <div class="copyright">&copy; 2024 Shymohn. All Rights Reserved.</div>
+    </footer>
 
     <script>
         window.onload = () => {
             gsap.registerPlugin(ScrollTrigger);
             const tl = gsap.timeline();
 
-            // 1. アイコンの円を描画
+            // 1. アイコンの円描画
             tl.to(".icon-svg-outline circle", {
                 strokeDashoffset: 0,
                 duration: 1.5,
                 ease: "power2.inOut"
             })
-            // 2. アイコン画像をフェードイン
+            // 2. アイコン出現
             .to("#iconImg", {
                 opacity: 1,
                 scale: 1,
                 duration: 1.2,
                 ease: "power2.out"
             }, "-=0.5")
-            // 3. 名前を表示
+            // 3. 名前とソーシャルリンク出現
             .to("#nameArea", {
                 opacity: 1,
-                y: -10,
                 duration: 1,
                 ease: "power2.out"
-            }, "-=0.5");
+            }, "-=0.5")
+            .to("#socialLinks", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.1
+            }, "-=0.3");
 
-            // 4. 箇条書き実績をスクロールに合わせて動的に表示
+            // 4. 実績リストのスクロール表示
             gsap.to(".achievement-item", {
                 scrollTrigger: {
                     trigger: "#achievements",
-                    start: "top 70%",
+                    start: "top 75%",
                 },
                 opacity: 1,
                 y: 0,
                 stagger: 0.15,
-                duration: 1,
+                duration: 0.8,
                 ease: "power3.out"
             });
         };

@@ -9,12 +9,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
-            --bg-color: #f8fbfe;
-            --grid-color: rgba(0, 150, 255, 0.1);
+            --bg-color: #fcfdfe;
+            --grid-color: rgba(0, 140, 255, 0.08);
             --main-black: #1a1a1a;
             --card-bg: #ffffff;
-            --card-border: #e1e8ed;
-            --text-gray: #666;
+            --card-border: #eaeff2;
+            --text-gray: #777;
         }
 
         body, html {
@@ -25,22 +25,15 @@
             overflow-x: hidden;
         }
 
-        /* --- 幾何学的背景アニメーション --- */
-        .bg-fixed {
+        /* --- 背景アニメーション --- */
+        .bg-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             background-image: 
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 40px 40px; /* 方眼のサイズ */
-        }
-
-        .floating-shape {
-            position: absolute;
-            stroke: rgba(0, 100, 255, 0.15);
-            fill: none;
-            stroke-width: 1;
+            background-size: 50px 50px;
         }
 
         /* --- Hero Section --- */
@@ -53,292 +46,255 @@
             position: relative;
         }
 
-        .icon-outer {
+        .icon-container {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 220px; height: 220px;
+            background: #fff; /* アイコンが線に被らないよう白塗り */
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* アイコンを背景から浮かせるための白い円 */
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
             z-index: 10;
         }
 
-        .icon-circle-svg {
+        .icon-svg-path {
             position: absolute;
-            top: -10px; left: -10px;
-            width: 240px; height: 240px;
+            width: 250px; height: 250px;
             transform: rotate(-90deg);
         }
 
-        .icon-circle-svg circle {
+        .icon-svg-path circle {
             fill: none;
             stroke: var(--main-black);
-            stroke-width: 0.5;
-            stroke-dasharray: 754;
-            stroke-dashoffset: 754;
+            stroke-width: 0.8;
+            stroke-dasharray: 785;
+            stroke-dashoffset: 785;
         }
 
         .main-icon {
-            width: 160px;
-            height: 160px;
-            border-radius: 8px;
+            width: 160px; height: 160px;
+            border-radius: 6px;
             z-index: 11;
             opacity: 0;
+            transform: scale(0.9);
         }
 
-        .name-area {
-            margin-top: 40px;
+        .hero-title {
+            margin-top: 50px;
             text-align: center;
             z-index: 12;
         }
 
-        .name-area h1 {
-            font-size: 32px;
+        .hero-title h1 {
+            font-size: 36px;
             font-weight: 200;
-            letter-spacing: 0.5em;
+            letter-spacing: 0.4em;
             margin: 0;
+            text-transform: uppercase;
         }
 
-        /* --- Social Link Section (Card Design) --- */
-        .content-section {
-            max-width: 1100px;
+        /* --- Social Link Section --- */
+        .content-wrapper {
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 100px 20px;
+            padding: 0 20px 150px;
         }
 
-        .section-header {
-            font-size: 24px;
+        .section-label {
+            font-size: 22px;
             font-weight: 600;
-            margin-bottom: 40px;
-            border-left: 5px solid var(--main-black);
+            margin-bottom: 35px;
             padding-left: 15px;
+            border-left: 4px solid var(--main-black);
+            display: flex;
+            align-items: center;
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
+            margin-bottom: 100px;
         }
 
         .social-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 12px;
-            padding: 20px 25px;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
+            padding: 22px;
             text-decoration: none;
             color: inherit;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
         }
 
         .social-card:hover {
             transform: translateY(-5px);
-            border-color: #007aff;
-            box-shadow: 0 12px 20px rgba(0,122,255,0.1);
+            border-color: #0084ff;
+            box-shadow: 0 15px 30px rgba(0,132,255,0.08);
         }
 
-        .card-top {
+        .card-title-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
+            gap: 8px;
+            margin-bottom: 6px;
         }
 
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1a1a1a;
-        }
-
-        .card-platform-icon {
-            font-size: 16px;
-        }
-
-        .card-desc {
-            font-size: 13px;
-            color: var(--text-gray);
-            font-weight: 300;
-        }
+        .card-name { font-weight: 600; font-size: 17px; }
+        .card-icon { font-size: 16px; }
+        .card-sub { font-size: 13px; color: var(--text-gray); font-weight: 300; }
 
         /* --- Achievements List --- */
-        .achievement-box {
-            margin-top: 80px;
-            background: rgba(255,255,255,0.6);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
+        .achievements-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
             border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
         }
 
-        .achievement-list { list-style: none; padding: 0; }
-        .achievement-item {
+        .ach-list { list-style: none; padding: 0; margin: 0; }
+        .ach-item {
             display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px dashed #ddd;
-            font-size: 15px;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f3f5;
         }
-        .item-dot {
-            width: 6px; height: 6px;
+        .ach-item:last-child { border-bottom: none; }
+        .ach-dot {
+            width: 8px; height: 8px;
             background: var(--main-black);
-            margin-right: 15px;
-            transform: rotate(45deg);
+            margin-right: 20px; margin-top: 7px;
+            flex-shrink: 0; transform: rotate(45deg);
         }
-
-        .highlight { color: #8c2132; font-weight: 500; margin-left: 10px; }
+        .ach-content { font-size: 15px; line-height: 1.6; color: #333; }
+        .ach-tag {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: 500;
+            color: #b12b40; /* 実績用のアクセントカラー */
+        }
     </style>
 </head>
 <body>
 
-    <!-- アニメーション背景 -->
-    <div class="bg-fixed" id="bgGrid"></div>
-    <svg class="bg-fixed" id="bgShapes"></svg>
+    <div class="bg-layer" id="gridBg"></div>
 
     <section class="hero">
-        <div class="icon-outer">
-            <svg class="icon-circle-svg" viewBox="0 0 240 240">
-                <circle cx="120" cy="120" r="118" />
+        <div class="icon-container">
+            <svg class="icon-svg-path" viewBox="0 0 250 250">
+                <circle cx="125" cy="125" r="124" />
             </svg>
             <img src="icon.png" alt="Shymohn" class="main-icon" id="mainIcon">
         </div>
-        <div class="name-area" id="nameArea">
+        <div class="hero-title" id="heroTitle">
             <h1>Shymohn</h1>
-            <p style="letter-spacing: 0.3em; font-size: 12px; color: #888; margin-top: 15px;">Competitor / Student</p>
+            <p style="letter-spacing: 0.8em; font-size: 10px; color: #999; margin-top: 15px; font-weight: 300;">@Shymohn</p>
         </div>
     </section>
 
-    <section class="content-section">
-        <div class="section-header">Social Link</div>
-        
+    <div class="content-wrapper">
+        <div class="section-label">Social Link</div>
         <div class="card-grid">
-            <!-- 各リンクカード -->
             <a href="https://atcoder.jp/users/Shymohn" target="_blank" class="social-card">
-                <div class="card-top">
-                    <span class="card-title">AtCoder</span>
-                    <span class="card-platform-icon">🏆</span>
-                </div>
-                <div class="card-desc">AtCoder</div>
+                <div class="card-title-row"><span class="card-name">AtCoder</span><span class="card-icon">🏆</span></div>
+                <div class="card-sub">AtCoderのアカウント。最高青 / 現在水色</div>
             </a>
-
             <a href="https://codeforces.com/profile/Shymohn" target="_blank" class="social-card">
-                <div class="card-top">
-                    <span class="card-title">CodeForces</span>
-                    <span class="card-platform-icon">📊</span>
-                </div>
-                <div class="card-desc">CodeForces</div>
+                <div class="card-title-row"><span class="card-name">CodeForces</span><span class="card-icon">📊</span></div>
+                <div class="card-sub">CodeForcesのアカウント</div>
             </a>
-
             <a href="https://onlinemathcontest.com/users/Shymohn" target="_blank" class="social-card">
-                <div class="card-top">
-                    <span class="card-title">OnlineMathContest</span>
-                    <span class="card-platform-icon">🔢</span>
-                </div>
-                <div class="card-desc">OMC</div>
+                <div class="card-title-row"><span class="card-name">OnlineMathContest</span><span class="card-icon">🔢</span></div>
+                <div class="card-sub">OMCのアカウント</div>
             </a>
-
             <a href="https://x.com/Shymohn" target="_blank" class="social-card">
-                <div class="card-top">
-                    <span class="card-title">X (Twitter)</span>
-                    <span class="card-platform-icon">𝕏</span>
-                </div>
-                <div class="card-desc">X</div>
+                <div class="card-title-row"><span class="card-name">X (Twitter)</span><span class="card-icon">𝕏</span></div>
+                <div class="card-sub">X(Twitter)のアカウント</div>
             </a>
-
             <a href="https://github.com/Shymohn" target="_blank" class="social-card">
-                <div class="card-top">
-                    <span class="card-title">GitHub</span>
-                    <span class="card-platform-icon">🐙</span>
-                </div>
-                <div class="card-desc">GitHub</div>
+                <div class="card-title-row"><span class="card-name">GitHub</span><span class="card-icon">🐙</span></div>
+                <div class="card-sub">GitHubのアカウント</div>
             </a>
-
-            <a href="#" target="_blank" class="social-card">
-                <div class="card-top">
-                    <span class="card-title">Marshmallow</span>
-                    <span class="card-platform-icon">🍬</span>
-                </div>
-                <div class="card-desc">マシュマロはこちらから</div>
+            <a href="#" class="social-card">
+                <div class="card-title-row"><span class="card-name">Marshmallow</span><span class="card-icon">🍬</span></div>
+                <div class="card-sub">マシュマロはこちらから</div>
             </a>
         </div>
 
-        <!-- 実績セクション -->
-        <div class="achievement-box">
-            <div class="section-header" style="margin-top:0;">Achievements</div>
-            <ul class="achievement-list">
-                <li class="achievement-item"><div class="item-dot"></div>INSO <span class="highlight">日本代表</span></li>
-                <li class="achievement-item"><div class="item-dot"></div>JOL '26 <span class="highlight">金賞 (1st)</span></li>
-                <li class="achievement-item"><div class="item-dot"></div>AJL H <span class="highlight">銀</span></li>
-                <li class="achievement-item"><div class="item-dot"></div>情報科学の達人<span class="highlight">7th</span></li>
-                <li class="achievement-item"><div class="item-dot"></div>東大理科一・三類志望 / 東大特進</li>
+        <div class="section-label">Achievements</div>
+        <div class="achievements-container">
+            <ul class="ach-list">
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">国際原子力科学オリンピック<span class="ach-tag">日本代表候補</span></div></li>
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">アジア太平洋言語学オリンピック (APLO)<span class="ach-tag">出場 (結果待ち)</span></div></li>
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">日本言語学オリンピック (JOL)<span class="ach-tag">金賞</span></div></li>
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">広島県科学オリンピック (団体戦)<span class="ach-tag">銀賞</span></div></li>
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">AtCoder junior league 高1 Heuristic部門<span class="ach-tag">準優勝</span></div></li>
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">AtCoder junior league 学校ランキング Heuristic部門<span class="ach-tag">5位</span></div></li>
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">パソコン甲子園 プログラミング部門<span class="ach-tag">新人賞 (中四国1位)</span></div></li>
             </ul>
         </div>
-    </section>
+    </div>
 
     <script>
         window.onload = () => {
             gsap.registerPlugin(ScrollTrigger);
 
-            // 1. 背景グリッドの無限移動
-            gsap.to("#bgGrid", {
-                backgroundPosition: "40px 40px",
-                duration: 2,
+            // 背景グリッドの無限移動アニメーション
+            gsap.to("#gridBg", {
+                backgroundPosition: "50px 50px",
+                duration: 3,
                 repeat: -1,
                 ease: "none"
             });
 
-            // 2. 幾何学オブジェクトの生成とアニメーション
-            const svg = document.getElementById('bgShapes');
-            for (let i = 0; i < 15; i++) {
-                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                const x = Math.random() * window.innerWidth;
-                const y = Math.random() * window.innerHeight;
-                const r = Math.random() * 50 + 10;
-                circle.setAttribute("cx", x);
-                circle.setAttribute("cy", y);
-                circle.setAttribute("r", r);
-                circle.setAttribute("class", "floating-shape");
-                svg.appendChild(circle);
-
-                gsap.to(circle, {
-                    x: (Math.random() - 0.5) * 200,
-                    y: (Math.random() - 0.5) * 200,
-                    duration: Math.random() * 10 + 10,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "sine.inOut"
-                });
-            }
-
-            // 3. ヒーローアニメーション
             const tl = gsap.timeline();
-            tl.to(".icon-circle-svg circle", {
+
+            // 1. アイコン周囲の円を描画
+            tl.to(".icon-svg-path circle", {
                 strokeDashoffset: 0,
-                duration: 1.5,
-                ease: "power2.inOut"
+                duration: 1.8,
+                ease: "power3.inOut"
             })
+            // 2. アイコン画像をフェードイン
             .to("#mainIcon", {
                 opacity: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power2.out"
+            }, "-=0.8")
+            // 3. タイトルを表示
+            .from("#heroTitle", {
+                y: 30,
+                opacity: 0,
                 duration: 1,
-            }, "-=0.5")
-            .from("#nameArea", {
-                y: 30, opacity: 0, duration: 1
+                ease: "power2.out"
             }, "-=0.5");
 
-            // 4. カードのスクロール表示
+            // 4. Social Link カードをスクロールに合わせて順番に表示
             gsap.from(".social-card", {
                 scrollTrigger: {
                     trigger: ".card-grid",
-                    start: "top 80%",
+                    start: "top 85%",
                 },
                 y: 40,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: "power3.out",
+                clearProps: "all" // アニメーション終了後にスタイルをクリアしてバグを防ぐ
+            });
+
+            // 5. 実績リストのアニメーション
+            gsap.from(".ach-item", {
+                scrollTrigger: {
+                    trigger: ".achievements-container",
+                    start: "top 85%",
+                },
+                x: -20,
                 opacity: 0,
                 stagger: 0.1,
                 duration: 0.8,

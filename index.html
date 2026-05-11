@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shymohn | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&family=Noto+Sans+JP:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
-            --bg-color: #FDFCFB; /* アイコンの背景に近い色 */
-            --accent-red: #8C2132;
-            --accent-navy: #1A2D4F;
-            --main-black: #1A1A1A;
-            --text-gray: #555;
+            --bg-color: #ffffff;
+            --main-black: #1a1a1a;
+            --accent-red: #8c2132;
+            --accent-navy: #1a2d4f;
+            --line-gray: #e0e0e0;
         }
 
         body, html {
@@ -22,9 +22,10 @@
             color: var(--main-black);
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* --- Hero Section --- */
+        /* --- Hero Section: Icon Drawing --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -34,210 +35,226 @@
             position: relative;
         }
 
-        /* 背景の幾何学ライン */
-        .bg-lines {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.4;
-        }
-
-        /* アイコン表示エリア */
-        .icon-container {
+        .icon-wrapper {
             position: relative;
-            width: 240px;
-            height: 240px;
-            z-index: 2;
+            width: 200px;
+            height: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .icon-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            /* 描画アニメーション用のマスク設定 */
-            clip-path: inset(0% 0% 100% 0%); 
+        /* アイコンを囲む動的な円 */
+        .icon-svg-outline {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            transform: rotate(-90deg);
         }
 
-        .name-title {
-            margin-top: 30px;
+        .icon-svg-outline circle {
+            fill: none;
+            stroke: var(--main-black);
+            stroke-width: 1;
+            stroke-dasharray: 628; /* 2 * PI * r */
+            stroke-dashoffset: 628;
+        }
+
+        .main-icon {
+            width: 160px;
+            height: 160px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: scale(0.9);
+            filter: grayscale(20%);
+        }
+
+        .name-area {
+            margin-top: 40px;
             text-align: center;
-            z-index: 2;
+            opacity: 0;
         }
 
-        .name-title h1 {
+        .name-area h1 {
+            font-size: 28px;
             font-weight: 200;
-            letter-spacing: 0.5em;
-            font-size: 24px;
+            letter-spacing: 0.6em;
             margin: 0;
             text-transform: uppercase;
         }
 
-        /* --- Profile Section --- */
-        .profile-section {
-            padding: 100px 10% 150px;
-            max-width: 900px;
+        /* --- Achievements Section --- */
+        .section-container {
+            max-width: 800px;
             margin: 0 auto;
-            border-top: 1px solid #eee;
+            padding: 100px 20px;
         }
 
-        .profile-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .profile-grid { grid-template-columns: 1fr; }
-        }
-
-        .profile-label {
+        .section-title {
             font-size: 12px;
-            letter-spacing: 0.2em;
-            color: var(--accent-navy);
-            font-weight: 600;
+            letter-spacing: 0.5em;
             text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .bio-text {
-            font-size: 15px;
-            line-height: 2;
-            color: var(--text-gray);
-        }
-
-        .award-list {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .award-tag {
-            background: #fff;
-            border: 1px solid #ddd;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-size: 13px;
+            color: var(--accent-navy);
+            margin-bottom: 50px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 20px;
         }
 
-        .award-tag.gold { border-left: 4px solid #FFD700; }
-        .award-tag.silver { border-left: 4px solid #C0C0C0; }
-        .award-tag.blue { border-left: 4px solid #007BFF; }
+        .section-title::after {
+            content: "";
+            flex-grow: 1;
+            height: 1px;
+            background: var(--line-gray);
+        }
 
-        .scroll-hint {
+        /* 箇条書きリストのスタイル */
+        .achievement-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .achievement-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .achievement-item:last-child { border-bottom: none; }
+
+        /* 文頭の記号を幾何学的に */
+        .item-marker {
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--main-black);
+            margin-right: 20px;
+            margin-top: 6px;
+            flex-shrink: 0;
+            transform: rotate(45deg);
+        }
+
+        .item-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+            letter-spacing: 0.05em;
+        }
+
+        .highlight {
+            font-weight: 400;
+            color: var(--accent-red);
+            margin-left: 8px;
+        }
+
+        .scroll-down {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             font-size: 10px;
-            letter-spacing: 0.3em;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-5px);}
-            60% {transform: translateY(-3px);}
+            letter-spacing: 0.4em;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 
-<section class="hero">
-    <svg class="bg-lines" viewBox="0 0 1000 1000">
-        <circle class="draw-line" cx="500" cy="500" r="300" fill="none" stroke="#ddd" stroke-width="0.5" stroke-dasharray="5 5" />
-        <path class="draw-line" d="M 0 500 Q 500 400 1000 500" fill="none" stroke="#eee" stroke-width="1" />
-        <path class="draw-line" d="M 0 500 Q 500 600 1000 500" fill="none" stroke="#eee" stroke-width="1" />
-    </svg>
-
-    <div class="icon-container">
-        <!-- あなたのアイコン画像 -->
-        <img src="icon.png" alt="Shymohn Icon" class="icon-image" id="mainIcon">
-    </div>
-
-    <div class="name-title">
-        <h1 id="name">Shymohn</h1>
-        <p style="font-size: 10px; letter-spacing: 0.8em; color: var(--accent-red); margin-top: 10px;">@Shymohn</p>
-    </div>
-
-    <div class="scroll-hint">SCROLL</div>
-</section>
-
-<section class="profile-section">
-    <div class="profile-grid">
-        <div>
-            <div class="profile-label">Status</div>
-            <p class="bio-text">高2 / 東大（理一or理三）志望</p>
-            <div class="profile-label" style="margin-top: 30px;">Social</div>
-            <p class="bio-text">Twitter: @Shymohn</p>
+    <section class="hero">
+        <div class="icon-wrapper">
+            <!-- アイコン描画用のSVG -->
+            <svg class="icon-svg-outline" viewBox="0 0 210 210">
+                <circle cx="105" cy="105" r="100" />
+            </svg>
+            <img src="icon.png" alt="Shymohn" class="main-icon" id="iconImg">
         </div>
+
+        <div class="name-area" id="nameArea">
+            <h1>Shymohn</h1>
+            <p style="font-size: 11px; letter-spacing: 0.2em; margin-top: 15px; color: #888;">High School Student / Competitor</p>
+        </div>
+
+        <div class="scroll-down">SCROLL</div>
+    </section>
+
+    <section class="section-container" id="achievements">
+        <div class="section-title">Achievements</div>
         
-        <div>
-            <div class="profile-label">Achievements & Awards</div>
-            <div class="award-list">
-                <span class="award-tag blue">INSO 日本代表</span>
-                <span class="award-tag blue">AtCoder A水 H青</span>
-                <span class="award-tag silver">AJL H 🥈</span>
-                <span class="award-tag blue">OMC 水</span>
-                <span class="award-tag gold">JOL '26 🥇</span>
-                <span class="award-tag">APLO '26</span>
-                <span class="award-tag">PCK 新人賞</span>
-                <span class="award-tag silver">県科学オリ 🥈</span>
-                <span class="award-tag">情報オリンピック 7th</span>
-                <span class="award-tag">東大特進</span>
-            </div>
-        </div>
-    </div>
-</section>
+        <ul class="achievement-list">
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">INSO <span class="highlight">日本代表</span></div>
+            </li>
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">JOL '26 <span class="highlight">金賞 (1st)</span></div>
+            </li>
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">AtCoder <span class="highlight">最高青 / 現在水</span></div>
+            </li>
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">AJL H <span class="highlight">銀メダル</span></div>
+            </li>
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">OMC <span class="highlight">水</span></div>
+            </li>
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">APLO '26 / PCK 新人賞 / 県科学オリ 🥈</div>
+            </li>
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">情報オリンピック (JOI) <span class="highlight">7th</span></div>
+            </li>
+            <li class="achievement-item">
+                <div class="item-marker"></div>
+                <div class="item-text">東大特進 / 理科一・三類志望</div>
+            </li>
+        </ul>
+    </section>
 
-<script>
-    window.onload = () => {
-        const tl = gsap.timeline({ defaults: { ease: "power4.inOut" } });
+    <script>
+        window.onload = () => {
+            gsap.registerPlugin(ScrollTrigger);
+            const tl = gsap.timeline();
 
-        // 1. 背景線の描画
-        tl.from(".draw-line", {
-            strokeDasharray: "1000",
-            strokeDashoffset: "1000",
-            duration: 2,
-            stagger: 0.3
-        });
+            // 1. アイコンの円を描画
+            tl.to(".icon-svg-outline circle", {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                ease: "power2.inOut"
+            })
+            // 2. アイコン画像をフェードイン
+            .to("#iconImg", {
+                opacity: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power2.out"
+            }, "-=0.5")
+            // 3. 名前を表示
+            .to("#nameArea", {
+                opacity: 1,
+                y: -10,
+                duration: 1,
+                ease: "power2.out"
+            }, "-=0.5");
 
-        // 2. アイコンの「描画」アニメーション（下から上へスキャンするように表示）
-        tl.to("#mainIcon", {
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: 2.5,
-            ease: "power2.inOut"
-        }, "-=1.5");
-
-        // 3. 名前の表示
-        tl.from("#name", {
-            y: 20,
-            opacity: 0,
-            duration: 1.5,
-            letterSpacing: "1.5em"
-        }, "-=1");
-
-        // 4. プロフィール要素のスクロール連動表示
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.from(".award-tag", {
-            scrollTrigger: {
-                trigger: ".profile-section",
-                start: "top 80%",
-            },
-            y: 20,
-            opacity: 0,
-            stagger: 0.05,
-            duration: 1,
-            ease: "power3.out"
-        });
-    };
-</script>
-
+            // 4. 箇条書き実績をスクロールに合わせて動的に表示
+            gsap.to(".achievement-item", {
+                scrollTrigger: {
+                    trigger: "#achievements",
+                    start: "top 70%",
+                },
+                opacity: 1,
+                y: 0,
+                stagger: 0.15,
+                duration: 1,
+                ease: "power3.out"
+            });
+        };
+    </script>
 </body>
 </html>

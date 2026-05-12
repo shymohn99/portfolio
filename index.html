@@ -15,6 +15,8 @@
             --card-bg: #ffffff;
             --card-border: #eaeff2;
             --text-gray: #777;
+            --skill-bg: #f1f5f9;
+            --skill-text: #475569;
         }
 
         body, html {
@@ -49,7 +51,7 @@
         .icon-container {
             position: relative;
             width: 220px; height: 220px;
-            background: #fff; /* アイコンが線に被らないよう白塗り */
+            background: #fff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -94,7 +96,7 @@
             text-transform: uppercase;
         }
 
-        /* --- Social Link Section --- */
+        /* --- Layout --- */
         .content-wrapper {
             max-width: 1000px;
             margin: 0 auto;
@@ -111,6 +113,7 @@
             align-items: center;
         }
 
+        /* --- Social Link Section --- */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -147,6 +150,51 @@
         .card-icon { font-size: 16px; }
         .card-sub { font-size: 13px; color: var(--text-gray); font-weight: 300; }
 
+        /* --- Skills Section --- */
+        .skills-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .skill-group-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 8px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: var(--skill-bg);
+            color: var(--skill-text);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
         /* --- Achievements List --- */
         .achievements-container {
             background: rgba(255, 255, 255, 0.7);
@@ -175,7 +223,7 @@
             display: inline-block;
             margin-left: 10px;
             font-weight: 500;
-            color: #b12b40; /* 実績用のアクセントカラー */
+            color: #b12b40;
         }
     </style>
 </head>
@@ -197,6 +245,7 @@
     </section>
 
     <div class="content-wrapper">
+        <!-- Social Link -->
         <div class="section-label">Social Link</div>
         <div class="card-grid">
             <a href="https://atcoder.jp/users/Shymohn" target="_blank" class="social-card">
@@ -221,6 +270,26 @@
             </a>
         </div>
 
+        <!-- Skills -->
+        <div class="section-label">Skills</div>
+        <div class="skills-container">
+            <div class="skill-group">
+                <div class="skill-group-title">Science & Math</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">原子力物理</span>
+                    <span class="skill-tag">競技数学</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <div class="skill-group-title">Programming</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">競技プログラミング</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements -->
         <div class="section-label">Achievements</div>
         <div class="achievements-container">
             <ul class="ach-list">
@@ -270,7 +339,7 @@
                 ease: "power2.out"
             }, "-=0.5");
 
-            // 4. Social Link カードをスクロールに合わせて順番に表示
+            // 4. Social Link カードを表示
             gsap.from(".social-card", {
                 scrollTrigger: {
                     trigger: ".card-grid",
@@ -281,10 +350,23 @@
                 stagger: 0.1,
                 duration: 0.8,
                 ease: "power3.out",
-                clearProps: "all" // アニメーション終了後にスタイルをクリアしてバグを防ぐ
+                clearProps: "all"
             });
 
-            // 5. 実績リストのアニメーション
+            // 5. Skillsを表示
+            gsap.from(".skill-group", {
+                scrollTrigger: {
+                    trigger: ".skills-container",
+                    start: "top 85%",
+                },
+                y: 30,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 0.8,
+                ease: "power3.out"
+            });
+
+            // 6. 実績リストのアニメーション
             gsap.from(".ach-item", {
                 scrollTrigger: {
                     trigger: ".achievements-container",

@@ -100,7 +100,7 @@
         .content-wrapper {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 0 20px 150px;
+            padding: 0 20px 80px; /* 余白を調整 */
         }
 
         .section-label {
@@ -225,6 +225,16 @@
             font-weight: 500;
             color: #b12b40;
         }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            color: var(--text-gray);
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
 <body>
@@ -294,7 +304,7 @@
         <div class="achievements-container">
             <ul class="ach-list">
                 <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">国際原子力科学オリンピック<span class="ach-tag">日本代表</span></div></li>
-                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">アジア太平洋言語学オリンピック (APLO)<span class="ach-tag">出場 (結果待ち)</span></div></li>
+                <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">アジア太平洋言語学オリンピック (APLO)<span class="ach-tag">出場</span></div></li>
                 <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">日本言語学オリンピック (JOL)<span class="ach-tag">金賞</span></div></li>
                 <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">広島県科学オリンピック <span class="ach-tag">銀賞</span></div></li>
                 <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">AtCoder junior league 高1 Heuristic部門<span class="ach-tag">準優勝</span></div></li>
@@ -303,6 +313,11 @@
             </ul>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        2026 @Shymohn all rights reserved
+    </footer>
 
     <script>
         window.onload = () => {
@@ -377,6 +392,17 @@
                 stagger: 0.1,
                 duration: 0.8,
                 ease: "power3.out"
+            });
+
+            // 7. フッターのフェードイン
+            gsap.from(".footer", {
+                scrollTrigger: {
+                    trigger: ".footer",
+                    start: "top 95%",
+                },
+                opacity: 0,
+                duration: 1.2,
+                ease: "power2.out"
             });
         };
     </script>

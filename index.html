@@ -18,6 +18,9 @@
             --text-gray: #777;
             --skill-bg: #f1f5f9;
             --skill-text: #475569;
+            --blob-shape: 58% 42% 65% 35% / 34% 48% 52% 66%;
+            --blob-opacity: 0.62;
+            --wave-opacity: 0.45;
         }
 
         body, html {
@@ -45,9 +48,9 @@
 
         .bg-blob {
             position: fixed;
-            border-radius: 58% 42% 65% 35% / 34% 48% 52% 66%;
+            border-radius: var(--blob-shape);
             filter: blur(2px);
-            opacity: 0.62;
+            opacity: var(--blob-opacity);
             z-index: -4;
             pointer-events: none;
         }
@@ -77,7 +80,7 @@
             inset: 0;
             z-index: -2;
             pointer-events: none;
-            opacity: 0.45;
+            opacity: var(--wave-opacity);
             background:
                 radial-gradient(75% 50% at 15% 72%, rgba(255,255,255,0.55), transparent 70%),
                 radial-gradient(80% 55% at 92% 32%, rgba(255,255,255,0.4), transparent 68%);

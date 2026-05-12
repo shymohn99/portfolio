@@ -21,6 +21,7 @@
             --blob-shape: 58% 42% 65% 35% / 34% 48% 52% 66%;
             --blob-opacity: 0.62;
             --wave-opacity: 0.45;
+            --bg-mask-gradient: radial-gradient(circle at center, rgba(0,0,0,0.95), rgba(0,0,0,0.65) 70%, transparent 100%);
         }
 
         body, html {
@@ -43,8 +44,8 @@
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
             background-size: 56px 56px;
-            -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,0.95), rgba(0,0,0,0.65) 70%, transparent 100%);
-            mask-image: radial-gradient(circle at center, rgba(0,0,0,0.95), rgba(0,0,0,0.65) 70%, transparent 100%);
+            -webkit-mask-image: var(--bg-mask-gradient);
+            mask-image: var(--bg-mask-gradient);
         }
 
         .bg-blob {
@@ -288,10 +289,10 @@
 </head>
 <body>
 
-    <div class="bg-layer" id="gridBg" aria-hidden="true"></div>
-    <div class="bg-blob bg-blob-a" id="blobA" aria-hidden="true"></div>
-    <div class="bg-blob bg-blob-b" id="blobB" aria-hidden="true"></div>
-    <div class="bg-wave" aria-hidden="true"></div>
+    <div class="bg-layer" id="gridBg" aria-hidden="true" role="presentation"></div>
+    <div class="bg-blob bg-blob-a" id="blobA" aria-hidden="true" role="presentation"></div>
+    <div class="bg-blob bg-blob-b" id="blobB" aria-hidden="true" role="presentation"></div>
+    <div class="bg-wave" aria-hidden="true" role="presentation"></div>
 
     <section class="hero">
         <div class="icon-container">

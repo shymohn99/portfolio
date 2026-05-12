@@ -55,6 +55,7 @@
             opacity: var(--blob-opacity);
             z-index: -4;
             pointer-events: none;
+            will-change: transform;
         }
 
         .bg-blob-a {
@@ -289,10 +290,10 @@
 </head>
 <body>
 
-    <div class="bg-layer" id="gridBg" aria-hidden="true" role="presentation"></div>
-    <div class="bg-blob bg-blob-a" id="blobA" aria-hidden="true" role="presentation"></div>
-    <div class="bg-blob bg-blob-b" id="blobB" aria-hidden="true" role="presentation"></div>
-    <div class="bg-wave" aria-hidden="true" role="presentation"></div>
+    <div class="bg-layer" id="gridBg" aria-hidden="true"></div>
+    <div class="bg-blob bg-blob-a" id="blobA" aria-hidden="true"></div>
+    <div class="bg-blob bg-blob-b" id="blobB" aria-hidden="true"></div>
+    <div class="bg-wave" aria-hidden="true"></div>
 
     <section class="hero">
         <div class="icon-container">

@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shymohn | 霜崎 洸我</title>
+
+    <!-- 保存済みテーマ、または端末設定を描画前に適用 -->
+    <script>
+        (() => {
+            const THEME_STORAGE_KEY = 'shymohn-portfolio-theme';
+            let storedTheme = null;
+            try {
+                storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+            } catch (error) {
+                // ストレージが利用できない場合は端末設定を使用
+            }
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.dataset.theme = storedTheme || (prefersDark ? 'dark' : 'light');
+        })();
+    </script>
     
     <!-- フォント -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
@@ -18,6 +33,7 @@
            カラーパレット & ベース設定
         ========================================= */
         :root {
+            color-scheme: light;
             --bg-color: #f8f9fc;
             --bg-color-deep: #edf1f8;
             --grid-color: rgba(31, 52, 85, 0.05); /* ネイビーベースのグリッド */
@@ -35,6 +51,22 @@
             --blob-shape: 58% 42% 65% 35% / 34% 48% 52% 66%;
             --blob-opacity: 0.7;
             --bg-mask-gradient: radial-gradient(circle at center, rgba(0,0,0,0.95), rgba(0,0,0,0.5) 85%, transparent 100%);
+        }
+
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --bg-color: #0b111c;
+            --bg-color-deep: #111b2b;
+            --grid-color: rgba(142, 172, 216, 0.08);
+            --main-black: #edf2f8;
+            --accent-red: #e1788e;
+            --accent-blue: #93b4e3;
+            --card-bg: rgba(18, 28, 44, 0.78);
+            --card-border: rgba(147, 180, 227, 0.18);
+            --text-gray: #b6c0ce;
+            --skill-bg: #1c293d;
+            --skill-text: #dce9fb;
+            --blob-opacity: 0.85;
         }
 
         body, html {
@@ -156,6 +188,30 @@
             position: relative; z-index: 10;
         }
 
+        .theme-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            min-width: 96px; min-height: 44px; padding: 9px 14px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            color: var(--main-black); background: var(--card-bg);
+            border: 1px solid var(--card-border); border-radius: 999px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            font: 500 13px/1 'Fira Code', monospace; cursor: pointer;
+            transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+        }
+        .theme-toggle:hover { transform: translateY(-2px); border-color: var(--accent-blue); }
+        .theme-toggle:focus-visible { outline: 3px solid var(--accent-red); outline-offset: 3px; }
+        .theme-toggle-icon { font-size: 17px; line-height: 1; }
+
+        html[data-theme="dark"] .loader-logo-container,
+        html[data-theme="dark"] .icon-container-main { background-color: #151f30; }
+        html[data-theme="dark"] .social-card:hover { background: rgba(25, 38, 58, 0.96); }
+
+        @media (max-width: 480px) {
+            .theme-toggle { top: 12px; right: 12px; min-width: 44px; width: 44px; padding: 9px; }
+            .theme-toggle-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+        }
+
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
         
         .hero-center-content {
@@ -270,6 +326,11 @@
          Main Portfolio Content (初期は非表示, Z-index 10)
     =========================================== -->
     <div id="main-content">
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="ダークモードに切り替える" aria-pressed="false">
+            <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+            <span class="theme-toggle-text">Dark</span>
+        </button>
+
         <section class="hero">
             <div class="hero-center-content">
                 <div class="static-ring"></div>
@@ -334,6 +395,44 @@
     <script>
         // DOMが読み込まれたタイミングで確実に初期化・実行する
         document.addEventListener("DOMContentLoaded", () => {
+            const THEME_STORAGE_KEY = 'shymohn-portfolio-theme';
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('.theme-toggle-icon');
+            const themeText = themeToggle.querySelector('.theme-toggle-text');
+            const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+            const getStoredTheme = () => {
+                try {
+                    return localStorage.getItem(THEME_STORAGE_KEY);
+                } catch (error) {
+                    return null;
+                }
+            };
+
+            const applyTheme = (theme, persist = false) => {
+                const isDark = theme === 'dark';
+                document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+                themeToggle.setAttribute('aria-pressed', String(isDark));
+                themeToggle.setAttribute('aria-label', isDark ? 'ライトモードに切り替える' : 'ダークモードに切り替える');
+                themeIcon.textContent = isDark ? '☀' : '☾';
+                themeText.textContent = isDark ? 'Light' : 'Dark';
+                if (persist) {
+                    try {
+                        localStorage.setItem(THEME_STORAGE_KEY, isDark ? 'dark' : 'light');
+                    } catch (error) {
+                        // ストレージが利用できない場合も現在の表示は維持
+                    }
+                }
+            };
+
+            applyTheme(document.documentElement.dataset.theme || 'light');
+            themeToggle.addEventListener('click', () => {
+                const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+                applyTheme(nextTheme, true);
+            });
+            colorSchemeQuery.addEventListener?.('change', (event) => {
+                if (!getStoredTheme()) applyTheme(event.matches ? 'dark' : 'light');
+            });
             
             // 1. C++ コード生成
             const cppCode = `
@@ -394,34 +493,55 @@ void dijkstra(int s, vector<ll>& d, const vector<vector<pair<int, ll>>>& G) {
                 gsap.from(".footer", { scrollTrigger: { trigger: ".footer", start: "top 95%" }, opacity: 0, duration: 1.2, ease: "power2.out" });
             }
 
-            // 4. 画面遷移のタイマー (3.2秒後にローディング完了)
-            setTimeout(() => {
-                const loader = document.getElementById('loader-wrapper');
-                const mainContent = document.getElementById('main-content');
-                
-                // ローディングの中身をフェードアウト
-                gsap.to(loader, { 
-                    opacity: 0, duration: 0.7, ease: "power2.inOut",
-                    onComplete: () => { 
-                        loader.style.display = 'none'; 
-                    }
-                });
+            // 4. 初回訪問のみローディングを表示
+            const VISITED_STORAGE_KEY = 'shymohn-portfolio-visited-v1';
+            const loader = document.getElementById('loader-wrapper');
+            const mainContent = document.getElementById('main-content');
+            let hasVisited = false;
 
-                // メインコンテンツをフェードイン
-                gsap.to(mainContent, { 
-                    opacity: 1, duration: 1.0, delay: 0.3, ease: "power2.out",
-                    onStart: () => {
-                        mainContent.style.pointerEvents = 'auto';
-                        document.body.classList.remove('no-scroll');
-                    }
-                });
-                
-                // 登場アニメーションをキック
+            try {
+                hasVisited = localStorage.getItem(VISITED_STORAGE_KEY) === 'true';
+            } catch (error) {
+                // ストレージが利用できない場合は初回扱いにする
+            }
+
+            const startMainAnimations = () => {
+                requestAnimationFrame(() => initMainAnimations());
+            };
+
+            if (hasVisited) {
+                // 2回目以降はローディングを完全に省略
+                loader.style.display = 'none';
+                mainContent.style.opacity = '1';
+                mainContent.style.pointerEvents = 'auto';
+                document.body.classList.remove('no-scroll');
+                startMainAnimations();
+            } else {
+                // 初回だけ従来のローディング演出を表示
                 setTimeout(() => {
-                    initMainAnimations();
-                }, 300);
-                
-            }, 3200);
+                    gsap.to(loader, {
+                        opacity: 0, duration: 0.7, ease: "power2.inOut",
+                        onComplete: () => {
+                            loader.style.display = 'none';
+                        }
+                    });
+
+                    gsap.to(mainContent, {
+                        opacity: 1, duration: 1.0, delay: 0.3, ease: "power2.out",
+                        onStart: () => {
+                            mainContent.style.pointerEvents = 'auto';
+                            document.body.classList.remove('no-scroll');
+                            try {
+                                localStorage.setItem(VISITED_STORAGE_KEY, 'true');
+                            } catch (error) {
+                                // ストレージが利用できない場合は次回も初回扱い
+                            }
+                        }
+                    });
+
+                    setTimeout(startMainAnimations, 300);
+                }, 3200);
+            }
 
             // 5. クリック波紋エフェクト
             document.addEventListener("click", (e) => {

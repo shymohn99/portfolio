@@ -262,6 +262,13 @@
         .card-icon { font-size: 16px; }
         .card-sub { font-size: 13px; color: var(--text-gray); font-family: 'Fira Code', monospace; }
 
+        .work-card { padding: 0; overflow: hidden; }
+        .work-card-preview {
+            display: block; width: 100%; aspect-ratio: 1200 / 630; object-fit: cover;
+            background: var(--bg-color-deep); border-bottom: 1px solid var(--card-border);
+        }
+        .work-card-body { padding: 22px 24px 24px; }
+
         .skills-container {
             background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--card-border); border-radius: 16px; padding: 35px; margin-bottom: 100px;
@@ -370,9 +377,20 @@
 
             <div class="section-label">Works</div>
             <div class="card-grid">
-                <a href="https://shymohn99.github.io/nuclear-decay-lab/" target="_blank" rel="noopener noreferrer" class="social-card">
-                    <div class="card-title-row"><span class="card-name">放射壊変シミュレーター</span><span class="card-icon" aria-hidden="true">⚛</span></div>
-                    <div class="card-sub">確率的な原子核崩壊と半減期を視覚的に観察できるシミュレーター</div>
+                <a href="https://shymohn99.github.io/nuclear-decay-lab/" target="_blank" rel="noopener noreferrer" class="social-card work-card">
+                    <img
+                        src="https://shymohn99.github.io/nuclear-decay-lab/og.png"
+                        class="work-card-preview"
+                        alt="Nuclear Decay Labのプレビュー"
+                        width="1200"
+                        height="630"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                    <div class="work-card-body">
+                        <div class="card-title-row"><span class="card-name">放射壊変シミュレーター</span><span class="card-icon" aria-hidden="true">⚛</span></div>
+                        <div class="card-sub">確率的な原子核崩壊と半減期を視覚的に観察できるシミュレーター</div>
+                    </div>
                 </a>
             </div>
 

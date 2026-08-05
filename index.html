@@ -247,6 +247,29 @@
         .theme-toggle:focus-visible { outline: 3px solid var(--accent-red); outline-offset: 3px; }
         .theme-toggle-icon { font-size: 17px; line-height: 1; }
 
+        .language-switch {
+            position: fixed; top: 20px; right: 132px; z-index: 100;
+            min-height: 44px; padding: 4px;
+            display: inline-flex; align-items: center; gap: 2px;
+            color: var(--main-black); background: var(--card-bg);
+            border: 1px solid var(--card-border); border-radius: 999px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+        .language-option {
+            min-width: 46px; min-height: 34px; padding: 0 9px;
+            border: 0; border-radius: 999px; background: transparent; color: var(--text-gray);
+            font: 500 12px/1 'Fira Code', monospace; cursor: pointer;
+            transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .language-option[aria-pressed="true"] {
+            color: #fff; background: var(--accent-blue);
+            box-shadow: 0 2px 8px rgba(31, 52, 85, 0.18);
+        }
+        .language-option:hover { color: var(--main-black); }
+        .language-option[aria-pressed="true"]:hover { color: #fff; }
+        .language-option:focus-visible { outline: 3px solid var(--accent-red); outline-offset: 2px; }
+
         html[data-theme="dark"] .loader-logo-container,
         html[data-theme="dark"] .icon-container-main { background-color: #151f30; }
         html[data-theme="dark"] .social-card,
@@ -258,6 +281,8 @@
         @media (max-width: 480px) {
             .theme-toggle { top: 12px; right: 12px; min-width: 44px; width: 44px; padding: 9px; }
             .theme-toggle-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+            .language-switch { top: 12px; right: 64px; min-height: 44px; }
+            .language-option { min-width: 42px; padding: 0 7px; }
         }
 
         .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; }
@@ -385,6 +410,10 @@
             <span class="theme-toggle-icon" aria-hidden="true">☾</span>
             <span class="theme-toggle-text">Dark</span>
         </button>
+        <div class="language-switch" id="language-switch" role="group" aria-label="表示言語">
+            <button class="language-option" type="button" data-language="ja" aria-pressed="true">JPN</button>
+            <button class="language-option" type="button" data-language="en" aria-pressed="false">ENG</button>
+        </div>
 
         <section class="hero">
             <div class="hero-center-content">
@@ -410,7 +439,7 @@
         </section>
 
         <div class="content-wrapper">
-            <div class="section-label">Social Link</div>
+            <div class="section-label" data-i18n="section.social">ソーシャルリンク</div>
             <div class="card-grid">
                 <a href="https://atcoder.jp/users/Shymohn" target="_blank" class="social-card"><div class="card-title-row"><span class="card-name">AtCoder</span><span class="card-icon">🏆</span></div><div class="card-sub"></div></a>
                 <a href="https://codeforces.com/profile/Shymohn" target="_blank" class="social-card"><div class="card-title-row"><span class="card-name">CodeForces</span><span class="card-icon">📊</span></div><div class="card-sub"></div></a>
@@ -419,43 +448,43 @@
                 <a href="https://github.com/shymohn99" target="_blank" class="social-card"><div class="card-title-row"><span class="card-name">GitHub</span><span class="card-icon">🐙</span></div><div class="card-sub"></div></a>
             </div>
 
-            <div class="section-label">Works</div>
+            <div class="section-label" data-i18n="section.works">作品</div>
             <div class="card-grid">
                 <a href="https://shymohn99.github.io/nuclear-decay-lab/" target="_blank" rel="noopener noreferrer" class="social-card work-card">
                     <img
                         src="https://shymohn99.github.io/nuclear-decay-lab/og.png"
                         class="work-card-preview"
-                        alt="Nuclear Decay Labのプレビュー"
+                        alt="Nuclear Decay Labのプレビュー" data-i18n-alt="work.previewAlt"
                         width="1200"
                         height="630"
                         loading="lazy"
                         decoding="async"
                     >
                     <div class="work-card-body">
-                        <div class="card-title-row"><span class="card-name">放射壊変シミュレーター</span><span class="card-icon" aria-hidden="true">⚛</span></div>
-                        <div class="card-sub">確率的な原子核崩壊と半減期を視覚的に観察できるシミュレーター</div>
+                        <div class="card-title-row"><span class="card-name" data-i18n="work.title">放射壊変シミュレーター</span><span class="card-icon" aria-hidden="true">⚛</span></div>
+                        <div class="card-sub" data-i18n="work.description">確率的な原子核崩壊と半減期を視覚的に観察できるシミュレーター</div>
                     </div>
                 </a>
             </div>
 
-            <div class="section-label">Skills</div>
+            <div class="section-label" data-i18n="section.skills">スキル</div>
             <div class="skills-container">
-                <div class="skill-group"><div class="skill-group-title"></div><div class="skill-tags"><span class="skill-tag">原子力物理</span><span class="skill-tag">競技数学</span><span class="skill-tag">C++</span></div></div>
+                <div class="skill-group"><div class="skill-group-title"></div><div class="skill-tags"><span class="skill-tag" data-i18n="skill.nuclear">原子力物理</span><span class="skill-tag" data-i18n="skill.math">競技数学</span><span class="skill-tag">C++</span></div></div>
             </div>
 
-            <div class="section-label">Achievements</div>
+            <div class="section-label" data-i18n="section.achievements">実績</div>
             <div class="achievements-container">
                 <ul class="ach-list">
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">第3回国際原子力科学オリンピック サウジアラビア大会<span class="ach-tag">日本代表</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">アジア太平洋言語学オリンピック (APLO)<span class="ach-tag">出場</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">日本言語学オリンピック (JOL)<span class="ach-tag">金賞</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">広島県科学オリンピック <span class="ach-tag">銀賞</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">AtCoder junior league 高1 Heuristic部門<span class="ach-tag">準優勝</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">AtCoder junior league 学校ランキング Heuristic部門<span class="ach-tag">5位</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">パソコン甲子園 プログラミング部門<span class="ach-tag">新人賞 </span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">DISCO Equipment Coding Contest 2026<span class="ach-tag">Finalist</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">情報科学の達人 7期生<span class="ach-tag">採択</span></div></li>
-                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content">JAPAN MENSA　会員<span class="ach-tag"></span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.inso">第3回国際原子力科学オリンピック サウジアラビア大会</span><span class="ach-tag" data-i18n="tag.japan">日本代表</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.aplo">アジア太平洋言語学オリンピック (APLO)</span><span class="ach-tag" data-i18n="tag.participated">出場</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.jol">日本言語学オリンピック (JOL)</span><span class="ach-tag" data-i18n="tag.gold">金賞</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.hiroshima">広島県科学オリンピック</span><span class="ach-tag" data-i18n="tag.silver">銀賞</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.atcoderIndividual">AtCoder Junior League 高1 Heuristic部門</span><span class="ach-tag" data-i18n="tag.runnerUp">準優勝</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.atcoderSchool">AtCoder Junior League 学校ランキング Heuristic部門</span><span class="ach-tag" data-i18n="tag.fifth">5位</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.pcKoshien">パソコン甲子園 プログラミング部門</span><span class="ach-tag" data-i18n="tag.rookie">新人賞</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span>DISCO Equipment Coding Contest 2026</span><span class="ach-tag">Finalist</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.infoScience">情報科学の達人 7期生</span><span class="ach-tag" data-i18n="tag.selected">採択</span></div></li>
+                    <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.mensa">JAPAN MENSA 会員</span><span class="ach-tag"></span></div></li>
                 </ul>
             </div>
         </div>
@@ -470,7 +499,78 @@
         // DOMが読み込まれたタイミングで確実に初期化・実行する
         document.addEventListener("DOMContentLoaded", () => {
             const THEME_STORAGE_KEY = 'shymohn-portfolio-theme';
+            const LANGUAGE_STORAGE_KEY = 'shymohn-portfolio-language';
             const themeToggle = document.getElementById('theme-toggle');
+            const languageSwitch = document.getElementById('language-switch');
+            const languageButtons = [...document.querySelectorAll('.language-option')];
+            let currentLanguage = 'ja';
+
+            const translations = {
+                ja: {
+                    'section.social': 'ソーシャルリンク',
+                    'section.works': '作品',
+                    'section.skills': 'スキル',
+                    'section.achievements': '実績',
+                    'work.title': '放射壊変シミュレーター',
+                    'work.description': '確率的な原子核崩壊と半減期を視覚的に観察できるシミュレーター',
+                    'work.previewAlt': 'Nuclear Decay Labのプレビュー',
+                    'skill.nuclear': '原子力物理',
+                    'skill.math': '競技数学',
+                    'ach.inso': '第3回国際原子力科学オリンピック サウジアラビア大会',
+                    'ach.aplo': 'アジア太平洋言語学オリンピック (APLO)',
+                    'ach.jol': '日本言語学オリンピック (JOL)',
+                    'ach.hiroshima': '広島県科学オリンピック',
+                    'ach.atcoderIndividual': 'AtCoder Junior League 高1 Heuristic部門',
+                    'ach.atcoderSchool': 'AtCoder Junior League 学校ランキング Heuristic部門',
+                    'ach.pcKoshien': 'パソコン甲子園 プログラミング部門',
+                    'ach.infoScience': '情報科学の達人 7期生',
+                    'ach.mensa': 'JAPAN MENSA 会員',
+                    'tag.japan': '日本代表',
+                    'tag.participated': '出場',
+                    'tag.gold': '金賞',
+                    'tag.silver': '銀賞',
+                    'tag.runnerUp': '準優勝',
+                    'tag.fifth': '5位',
+                    'tag.rookie': '新人賞',
+                    'tag.selected': '採択'
+                },
+                en: {
+                    'section.social': 'Social Links',
+                    'section.works': 'Works',
+                    'section.skills': 'Skills',
+                    'section.achievements': 'Achievements',
+                    'work.title': 'Nuclear Decay Simulator',
+                    'work.description': 'An interactive simulator for visualizing stochastic nuclear decay and half-life.',
+                    'work.previewAlt': 'Preview of Nuclear Decay Lab',
+                    'skill.nuclear': 'Nuclear Physics',
+                    'skill.math': 'Competitive Mathematics',
+                    'ach.inso': '3rd International Nuclear Science Olympiad — Saudi Arabia',
+                    'ach.aplo': 'Asia Pacific Linguistics Olympiad (APLO)',
+                    'ach.jol': 'Japan Linguistics Olympiad (JOL)',
+                    'ach.hiroshima': 'Hiroshima Prefecture Science Olympiad',
+                    'ach.atcoderIndividual': 'AtCoder Junior League — 10th Grade Heuristic Division',
+                    'ach.atcoderSchool': 'AtCoder Junior League — School Ranking, Heuristic Division',
+                    'ach.pcKoshien': 'PC Koshien — Programming Division',
+                    'ach.infoScience': 'Information Science no Tatsujin — 7th Cohort',
+                    'ach.mensa': 'JAPAN MENSA Member',
+                    'tag.japan': 'Japan Representative',
+                    'tag.participated': 'Participant',
+                    'tag.gold': 'Gold Award',
+                    'tag.silver': 'Silver Award',
+                    'tag.runnerUp': 'Runner-up',
+                    'tag.fifth': '5th Place',
+                    'tag.rookie': 'Rookie Award',
+                    'tag.selected': 'Selected'
+                }
+            };
+
+            const getStoredLanguage = () => {
+                try {
+                    return localStorage.getItem(LANGUAGE_STORAGE_KEY);
+                } catch (error) {
+                    return null;
+                }
+            };
             const themeIcon = themeToggle.querySelector('.theme-toggle-icon');
             const themeText = themeToggle.querySelector('.theme-toggle-text');
             const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -487,7 +587,10 @@
                 const isDark = theme === 'dark';
                 document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
                 themeToggle.setAttribute('aria-pressed', String(isDark));
-                themeToggle.setAttribute('aria-label', isDark ? 'ライトモードに切り替える' : 'ダークモードに切り替える');
+                const english = document.documentElement.lang === 'en';
+                themeToggle.setAttribute('aria-label', isDark
+                    ? (english ? 'Switch to light mode' : 'ライトモードに切り替える')
+                    : (english ? 'Switch to dark mode' : 'ダークモードに切り替える'));
                 themeIcon.textContent = isDark ? '☀' : '☾';
                 themeText.textContent = isDark ? 'Light' : 'Dark';
                 if (persist) {
@@ -498,6 +601,54 @@
                     }
                 }
             };
+
+            const applyLanguage = (language, persist = false) => {
+                currentLanguage = language === 'en' ? 'en' : 'ja';
+                const copy = translations[currentLanguage];
+                document.documentElement.lang = currentLanguage;
+                document.documentElement.dataset.language = currentLanguage;
+
+                document.querySelectorAll('[data-i18n]').forEach((element) => {
+                    const value = copy[element.dataset.i18n];
+                    if (value) element.textContent = value;
+                });
+                document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
+                    const value = copy[element.dataset.i18nAlt];
+                    if (value) element.alt = value;
+                });
+
+                languageButtons.forEach((button) => {
+                    button.setAttribute('aria-pressed', String(button.dataset.language === currentLanguage));
+                });
+                languageSwitch.setAttribute('aria-label', currentLanguage === 'en' ? 'Display language' : '表示言語');
+
+                const english = currentLanguage === 'en';
+                document.title = english ? 'Shymohn | Koga Shimozaki — Portfolio' : 'Shymohn | 霜崎 洸我 — Portfolio';
+                const metaDescription = english
+                    ? 'Portfolio of Shymohn (Koga Shimozaki), featuring work and achievements in nuclear physics, competitive mathematics, and programming.'
+                    : 'Shymohn（霜崎洸我）のポートフォリオ。原子力物理、競技数学、プログラミングの活動・作品・受賞歴を紹介します。';
+                document.querySelector('meta[name="description"]')?.setAttribute('content', metaDescription);
+                document.querySelector('meta[property="og:locale"]')?.setAttribute('content', english ? 'en_US' : 'ja_JP');
+                document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);
+                document.querySelector('meta[property="og:description"]')?.setAttribute('content', metaDescription);
+                document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', document.title);
+                document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', metaDescription);
+
+                if (persist) {
+                    try {
+                        localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+                    } catch (error) {
+                        // ストレージが利用できない場合も現在の表示は維持
+                    }
+                }
+                applyTheme(document.documentElement.dataset.theme || 'light');
+            };
+
+            const storedLanguage = getStoredLanguage();
+            applyLanguage(storedLanguage === 'en' ? 'en' : 'ja');
+            languageButtons.forEach((button) => {
+                button.addEventListener('click', () => applyLanguage(button.dataset.language, true));
+            });
 
             applyTheme(document.documentElement.dataset.theme || 'light');
             themeToggle.addEventListener('click', () => {

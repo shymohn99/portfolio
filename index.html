@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shymohn | 霜崎 洸我 — Portfolio</title>
-    <meta name="description" content="Shymohn（霜崎洸我）のポートフォリオ。原子力物理、競技数学、プログラミングの活動・作品・受賞歴を紹介します。">
+    <title>Shymohn（霜崎 洸我）| 原子力物理・競技数学・プログラミング</title>
+    <meta name="description" content="Shymohn（霜崎 洸我）のポートフォリオ。国際原子力科学オリンピック日本代表としての活動をはじめ、原子力物理、競技数学、プログラミングの作品・実績を紹介します。">
     <meta name="author" content="Shymohn">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://shymohn99.github.io/portfolio/">
 
     <meta property="og:type" content="profile">
     <meta property="og:locale" content="ja_JP">
+    <meta property="og:locale:alternate" content="en_US">
     <meta property="og:site_name" content="Shymohn Portfolio">
-    <meta property="og:title" content="Shymohn | 霜崎 洸我 — Portfolio">
-    <meta property="og:description" content="原子力物理、競技数学、プログラミングに取り組むShymohnの作品・活動・受賞歴。">
+    <meta property="og:title" content="Shymohn（霜崎 洸我）| 原子力物理・競技数学・プログラミング">
+    <meta property="og:description" content="Shymohn（霜崎 洸我）のポートフォリオ。国際原子力科学オリンピック日本代表としての活動、原子力物理、競技数学、プログラミングの作品・実績を紹介。">
     <meta property="og:url" content="https://shymohn99.github.io/portfolio/">
     <meta property="og:image" content="https://shymohn99.github.io/portfolio/Shymohn_nww.png">
     <meta property="og:image:alt" content="Shymohn">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Shymohn | 霜崎 洸我 — Portfolio">
-    <meta name="twitter:description" content="原子力物理、競技数学、プログラミングに取り組むShymohnのポートフォリオ。">
+    <meta name="twitter:title" content="Shymohn（霜崎 洸我）| 原子力物理・競技数学・プログラミング">
+    <meta name="twitter:description" content="Shymohn（霜崎 洸我）のポートフォリオ。原子力物理、競技数学、プログラミングの作品・実績を紹介。">
     <meta name="twitter:image" content="https://shymohn99.github.io/portfolio/Shymohn_nww.png">
 
     <script type="application/ld+json">
@@ -29,16 +30,20 @@
       "@type": "ProfilePage",
       "@id": "https://shymohn99.github.io/portfolio/#profile",
       "url": "https://shymohn99.github.io/portfolio/",
-      "name": "Shymohn | 霜崎 洸我 — Portfolio",
-      "description": "原子力物理、競技数学、プログラミングに取り組むShymohnの作品・活動・受賞歴。",
+      "name": "Shymohn（霜崎 洸我）| 原子力物理・競技数学・プログラミング",
+      "description": "Shymohn（霜崎 洸我）のポートフォリオ。国際原子力科学オリンピック日本代表としての活動、原子力物理、競技数学、プログラミングの作品・実績を紹介します。",
       "inLanguage": "ja",
+      "dateModified": "2026-08-05",
       "mainEntity": {
         "@type": "Person",
         "@id": "https://shymohn99.github.io/portfolio/#person",
         "name": "霜崎 洸我",
-        "alternateName": "Shymohn",
+        "alternateName": ["Shymohn", "Koga Shimozaki"],
+        "description": "原子力物理、競技数学、プログラミングに取り組むShymohn（霜崎 洸我）。第3回国際原子力科学オリンピック日本代表。",
         "url": "https://shymohn99.github.io/portfolio/",
         "image": "https://shymohn99.github.io/portfolio/Shymohn_nww.png",
+        "knowsAbout": ["原子力物理", "競技数学", "競技プログラミング", "C++", "Nuclear Physics", "Competitive Mathematics", "Competitive Programming"],
+        "award": ["第3回国際原子力科学オリンピック 日本代表", "日本言語学オリンピック 金賞"],
         "sameAs": [
           "https://github.com/shymohn99",
           "https://x.com/Shymohn",
@@ -318,6 +323,14 @@
         .content-wrapper { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
         .section-label { font-size: 20px; font-family: 'Fira Code', monospace; font-weight: 600; margin-bottom: 30px; padding-left: 14px; border-left: 4px solid var(--accent-blue); display: flex; align-items: center; }
 
+        .about-card {
+            background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border); border-radius: 16px; padding: 30px 34px; margin-bottom: 100px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .about-card p { margin: 0; color: var(--main-black); font-size: 15px; line-height: 1.9; font-weight: 400; }
+        @media (max-width: 480px) { .about-card { padding: 24px; } }
+
         .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 100px; }
         
         .social-card {
@@ -434,11 +447,16 @@
             
             <div class="hero-title" id="heroTitle">
                 <h1>Shymohn</h1>
-                <p>@Shymohn</p>
+                <p data-i18n="hero.subtitle">霜崎 洸我 / @Shymohn</p>
             </div>
         </section>
 
         <div class="content-wrapper">
+            <div class="section-label" data-i18n="section.about">About</div>
+            <section class="about-card" aria-label="Shymohnについて" data-i18n-aria-label="about.ariaLabel">
+                <p data-i18n="about.body">Shymohn（霜崎 洸我）は、原子力物理・競技数学・プログラミングに取り組んでいます。第3回国際原子力科学オリンピックの日本代表として活動するほか、競技プログラミングや言語学オリンピックにも取り組んでいます。このポートフォリオでは、作品・スキル・受賞歴を紹介します。</p>
+            </section>
+
             <div class="section-label" data-i18n="section.social">ソーシャルリンク</div>
             <div class="card-grid">
                 <a href="https://atcoder.jp/users/Shymohn" target="_blank" class="social-card"><div class="card-title-row"><span class="card-name">AtCoder</span><span class="card-icon">🏆</span></div><div class="card-sub"></div></a>
@@ -507,6 +525,10 @@
 
             const translations = {
                 ja: {
+                    'hero.subtitle': '霜崎 洸我 / @Shymohn',
+                    'section.about': 'About',
+                    'about.body': 'Shymohn（霜崎 洸我）は、原子力物理・競技数学・プログラミングに取り組んでいます。第3回国際原子力科学オリンピックの日本代表として活動するほか、競技プログラミングや言語学オリンピックにも取り組んでいます。このポートフォリオでは、作品・スキル・受賞歴を紹介します。',
+                    'about.ariaLabel': 'Shymohnについて',
                     'section.social': 'ソーシャルリンク',
                     'section.works': '作品',
                     'section.skills': 'スキル',
@@ -535,6 +557,10 @@
                     'tag.selected': '採択'
                 },
                 en: {
+                    'hero.subtitle': 'Koga Shimozaki / @Shymohn',
+                    'section.about': 'About',
+                    'about.body': 'Shymohn (Koga Shimozaki) works in nuclear physics, competitive mathematics, and programming. He represented Japan at the 3rd International Nuclear Science Olympiad and also participates in competitive programming and linguistics olympiads. This portfolio presents his projects, skills, and achievements.',
+                    'about.ariaLabel': 'About Shymohn',
                     'section.social': 'Social Links',
                     'section.works': 'Works',
                     'section.skills': 'Skills',
@@ -616,6 +642,10 @@
                     const value = copy[element.dataset.i18nAlt];
                     if (value) element.alt = value;
                 });
+                document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+                    const value = copy[element.dataset.i18nAriaLabel];
+                    if (value) element.setAttribute('aria-label', value);
+                });
 
                 languageButtons.forEach((button) => {
                     button.setAttribute('aria-pressed', String(button.dataset.language === currentLanguage));
@@ -623,10 +653,12 @@
                 languageSwitch.setAttribute('aria-label', currentLanguage === 'en' ? 'Display language' : '表示言語');
 
                 const english = currentLanguage === 'en';
-                document.title = english ? 'Shymohn | Koga Shimozaki — Portfolio' : 'Shymohn | 霜崎 洸我 — Portfolio';
+                document.title = english
+                    ? 'Shymohn (Koga Shimozaki) | Nuclear Physics, Mathematics & Programming'
+                    : 'Shymohn（霜崎 洸我）| 原子力物理・競技数学・プログラミング';
                 const metaDescription = english
-                    ? 'Portfolio of Shymohn (Koga Shimozaki), featuring work and achievements in nuclear physics, competitive mathematics, and programming.'
-                    : 'Shymohn（霜崎洸我）のポートフォリオ。原子力物理、競技数学、プログラミングの活動・作品・受賞歴を紹介します。';
+                    ? 'Portfolio of Shymohn (Koga Shimozaki), featuring achievements and projects in nuclear physics, competitive mathematics, and programming.'
+                    : 'Shymohn（霜崎 洸我）のポートフォリオ。国際原子力科学オリンピック日本代表としての活動をはじめ、原子力物理、競技数学、プログラミングの作品・実績を紹介します。';
                 document.querySelector('meta[name="description"]')?.setAttribute('content', metaDescription);
                 document.querySelector('meta[property="og:locale"]')?.setAttribute('content', english ? 'en_US' : 'ja_JP');
                 document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);

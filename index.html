@@ -328,7 +328,8 @@
             border: 1px solid var(--card-border); border-radius: 16px; padding: 30px 34px; margin-bottom: 100px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.02);
         }
-        .about-card p { margin: 0; color: var(--main-black); font-size: 15px; line-height: 1.9; font-weight: 400; }
+        .about-list { margin: 0; padding-left: 20px; color: var(--main-black); font-size: 15px; line-height: 2; }
+        .about-list li::marker { color: var(--accent-red); }
         @media (max-width: 480px) { .about-card { padding: 24px; } }
 
         .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 100px; }
@@ -454,7 +455,12 @@
         <div class="content-wrapper">
             <div class="section-label" data-i18n="section.about">About</div>
             <section class="about-card" aria-label="Shymohnについて" data-i18n-aria-label="about.ariaLabel">
-                <p data-i18n="about.body">Shymohn（霜崎 洸我）は、原子力物理・競技数学・プログラミングに取り組んでいます。第3回国際原子力科学オリンピックの日本代表として活動するほか、競技プログラミングや言語学オリンピックにも取り組んでいます。このポートフォリオでは、作品・スキル・受賞歴を紹介します。</p>
+                <ul class="about-list">
+                    <li data-i18n="about.nuclear">原子力物理</li>
+                    <li data-i18n="about.math">競技数学</li>
+                    <li data-i18n="about.programming">プログラミング</li>
+                    <li data-i18n="about.inso">第3回国際原子力科学オリンピック 日本代表</li>
+                </ul>
             </section>
 
             <div class="section-label" data-i18n="section.social">ソーシャルリンク</div>
@@ -527,7 +533,10 @@
                 ja: {
                     'hero.subtitle': '霜崎 洸我 / @Shymohn',
                     'section.about': 'About',
-                    'about.body': 'Shymohn（霜崎 洸我）は、原子力物理・競技数学・プログラミングに取り組んでいます。第3回国際原子力科学オリンピックの日本代表として活動するほか、競技プログラミングや言語学オリンピックにも取り組んでいます。このポートフォリオでは、作品・スキル・受賞歴を紹介します。',
+                    'about.nuclear': '原子力物理',
+                    'about.math': '競技数学',
+                    'about.programming': 'プログラミング',
+                    'about.inso': '第3回国際原子力科学オリンピック 日本代表',
                     'about.ariaLabel': 'Shymohnについて',
                     'section.social': 'ソーシャルリンク',
                     'section.works': '作品',
@@ -559,7 +568,10 @@
                 en: {
                     'hero.subtitle': 'Koga Shimozaki / @Shymohn',
                     'section.about': 'About',
-                    'about.body': 'Shymohn (Koga Shimozaki) works in nuclear physics, competitive mathematics, and programming. He represented Japan at the 3rd International Nuclear Science Olympiad and also participates in competitive programming and linguistics olympiads. This portfolio presents his projects, skills, and achievements.',
+                    'about.nuclear': 'Nuclear Physics',
+                    'about.math': 'Competitive Mathematics',
+                    'about.programming': 'Programming',
+                    'about.inso': '3rd International Nuclear Science Olympiad — Japan Representative',
                     'about.ariaLabel': 'About Shymohn',
                     'section.social': 'Social Links',
                     'section.works': 'Works',

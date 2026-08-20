@@ -8,8 +8,8 @@
     <meta name="author" content="Koga Shimosaki (Shymohn)">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://shymohn99.github.io/portfolio/">
-    <link rel="icon" type="image/png" href="Shymohn_nww.png">
-    <link rel="apple-touch-icon" href="Shymohn_nww.png">
+    <link rel="icon" type="image/png" href="https://shymohn99.github.io/portfolio/Shymohn_nww.png">
+    <link rel="apple-touch-icon" href="https://shymohn99.github.io/portfolio/Shymohn_nww.png">
 
     <meta property="og:type" content="profile">
     <meta property="og:locale" content="ja_JP">
@@ -355,14 +355,33 @@
         .work-card-body { padding: 22px 24px 24px; }
 
         .skills-container {
-            background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border); border-radius: 16px; padding: 35px; margin-bottom: 100px;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 35px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
+            margin-bottom: 100px;
         }
-        .skill-group-title { font-size: 14px; text-transform: uppercase; font-family: 'Fira Code', monospace; letter-spacing: 0.1em; color: var(--text-gray); margin-bottom: 20px; border-bottom: 1px solid rgba(31, 52, 85, 0.1); padding-bottom: 8px; }
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 10px; }
-        .skill-tag { background: var(--skill-bg); color: var(--skill-text); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; border: 1px solid transparent; transition: all 0.2s ease; }
-        .skill-tag:hover { background: var(--accent-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(31, 52, 85, 0.2); }
+        .skill-group {
+            position: relative; min-height: 150px; padding: 22px 20px 20px; overflow: hidden;
+            background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border); border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .skill-group::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-blue)); opacity: 0.8;
+        }
+        .skill-group:hover { transform: translateY(-4px); border-color: var(--accent-blue); box-shadow: 0 12px 24px rgba(31, 52, 85, 0.08); }
+        .skill-group-title {
+            display: flex; justify-content: space-between; gap: 8px; margin: 0 0 28px; padding: 0;
+            color: var(--text-gray); font: 500 10px/1.4 'Fira Code', monospace; letter-spacing: 0.12em;
+        }
+        .skill-tags { display: grid; gap: 8px; }
+        .skill-tag { padding: 0; background: transparent; color: var(--main-black); font-size: 18px; font-weight: 500; border: 0; }
+        .skill-tag:hover { background: transparent; color: var(--accent-red); transform: none; box-shadow: none; }
+        .skill-note { color: var(--text-gray); font-size: 12px; line-height: 1.5; }
+        @media (max-width: 720px) {
+            .skills-container { grid-template-columns: 1fr; gap: 12px; }
+            .skill-group { min-height: 0; }
+        }
 
         .achievements-container {
             background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -374,6 +393,29 @@
         .ach-dot { width: 7px; height: 7px; background: var(--accent-red); margin-right: 20px; margin-top: 8px; flex-shrink: 0; transform: rotate(45deg); box-shadow: 0 0 6px rgba(155, 42, 64, 0.5); }
         .ach-content { font-size: 15px; line-height: 1.6; color: var(--main-black); font-weight: 400; }
         .ach-tag { display: inline-block; margin-left: 10px; font-weight: 600; color: var(--accent-blue); font-family: 'Fira Code', monospace; font-size: 13px; }
+
+        .contact-section {
+            display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr); gap: 28px;
+            align-items: stretch; padding: 32px; margin-bottom: 100px;
+            background: var(--card-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border); border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .contact-copy { display: flex; flex-direction: column; justify-content: center; }
+        .contact-kicker { margin: 0 0 14px; color: var(--accent-red); font: 500 12px/1.4 'Fira Code', monospace; letter-spacing: 0.16em; }
+        .contact-copy h2 { margin: 0 0 14px; color: var(--main-black); font-size: clamp(24px, 4vw, 34px); font-weight: 300; letter-spacing: 0.08em; }
+        .contact-copy p { max-width: 38em; margin: 0; color: var(--text-gray); font-size: 14px; line-height: 1.9; }
+        .contact-actions { display: grid; gap: 12px; align-content: center; }
+        .contact-card { padding: 18px 20px; }
+        .contact-card .card-title-row { justify-content: space-between; }
+        .contact-card .card-sub { line-height: 1.6; }
+        .contact-card-arrow { color: var(--accent-red); font-size: 18px; line-height: 1; transition: transform 0.2s ease; }
+        .contact-card:hover .contact-card-arrow { transform: translate(2px, -2px); }
+        @media (max-width: 640px) {
+            .contact-section { grid-template-columns: 1fr; padding: 24px; }
+            .contact-copy h2 { letter-spacing: 0.04em; }
+        }
+        .contact-wrapper { padding-bottom: 0; }
 
         .footer { text-align: center; padding: 60px 0 40px; color: var(--text-gray); font-size: 13px; font-weight: 300; letter-spacing: 0.05em; font-family: 'Fira Code', monospace; }
         
@@ -412,7 +454,7 @@
                 <div class="orbital orbital-3"></div>
             </div>
             <div class="loader-logo-container">
-                <img src="Shymohn_nww.png" id="loading-logo" alt="logo">
+                <img src="https://shymohn99.github.io/portfolio/Shymohn_nww.png" id="loading-logo" alt="logo">
             </div>
         </div>
         <div class="loading-text">Loading...</div>
@@ -443,7 +485,7 @@
                 <div class="icon-container-main">
                     <svg class="icon-svg-path" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="95" /></svg>
                     <div class="icon-inner">
-                        <img src="Shymohn_nww.png" alt="Shymohn" class="main-icon" id="mainIcon">
+                        <img src="https://shymohn99.github.io/portfolio/Shymohn_nww.png" alt="Shymohn" class="main-icon" id="mainIcon">
                     </div>
                 </div>
             </div>
@@ -494,8 +536,19 @@
             </div>
 
             <div class="section-label" data-i18n="section.skills">Skills</div>
-            <div class="skills-container">
-                <div class="skill-group"><div class="skill-group-title"></div><div class="skill-tags"><span class="skill-tag" data-i18n="skill.nuclear">原子力物理</span><span class="skill-tag" data-i18n="skill.math">競技数学</span><span class="skill-tag">C++</span></div></div>
+            <div class="skills-container" role="list">
+                <article class="skill-group" role="listitem">
+                    <div class="skill-group-title"><span data-i18n="skill.nuclearLabel">01 / NUCLEAR PHYSICS</span></div>
+                    <div class="skill-tags"><span class="skill-tag" data-i18n="skill.nuclear">原子力物理</span><span class="skill-note" data-i18n="skill.nuclearNote">壊変・核種・放射線</span></div>
+                </article>
+                <article class="skill-group" role="listitem">
+                    <div class="skill-group-title"><span data-i18n="skill.mathLabel">02 / COMPETITIVE MATH</span></div>
+                    <div class="skill-tags"><span class="skill-tag" data-i18n="skill.math">競技数学</span><span class="skill-note" data-i18n="skill.mathNote">論理・確率・最適化</span></div>
+                </article>
+                <article class="skill-group" role="listitem">
+                    <div class="skill-group-title"><span data-i18n="skill.cppLabel">03 / PROGRAMMING</span></div>
+                    <div class="skill-tags"><span class="skill-tag">C++</span><span class="skill-note" data-i18n="skill.cppNote">アルゴリズム・実装</span></div>
+                </article>
             </div>
 
             <div class="section-label" data-i18n="section.achievements">Achievements</div>
@@ -513,6 +566,27 @@
                     <li class="ach-item"><div class="ach-dot"></div><div class="ach-content"><span data-i18n="ach.mensa">JAPAN MENSA 会員</span><span class="ach-tag"></span></div></li>
                 </ul>
             </div>
+        </div>
+
+        <div class="content-wrapper contact-wrapper">
+            <div class="section-label" data-i18n="section.contact">Contact / Collaboration</div>
+            <section class="contact-section" aria-label="連絡・共同制作" data-i18n-aria-label="contact.ariaLabel">
+                <div class="contact-copy">
+                    <div class="contact-kicker" data-i18n="contact.kicker">OPEN TO CONVERSATIONS</div>
+                    <h2 data-i18n="contact.title">一緒につくる、考える。</h2>
+                    <p data-i18n="contact.description">作品についての質問、共同制作、研究・学習の相談は、XまたはGmailから気軽に連絡してください。</p>
+                </div>
+                <div class="contact-actions">
+                    <a href="https://x.com/Shymohn" target="_blank" rel="noopener noreferrer" class="social-card contact-card">
+                        <div class="card-title-row"><span class="card-name" data-i18n="contact.x.title">X / Collaboration</span><span class="contact-card-arrow" aria-hidden="true">↗</span></div>
+                        <div class="card-sub" data-i18n="contact.x.description">共同制作・研究・相談</div>
+                    </a>
+                    <a href="mailto:shymohn.contact@gmail.com" class="social-card contact-card">
+                        <div class="card-title-row"><span class="card-name" data-i18n="contact.email.title">Gmail / Contact</span><span class="contact-card-arrow" aria-hidden="true">↗</span></div>
+                        <div class="card-sub" data-i18n="contact.email.description">メールでの問い合わせ・連絡</div>
+                    </a>
+                </div>
+            </section>
         </div>
 
         <footer class="footer">2026 @Shymohn all rights reserved.</footer>
@@ -544,11 +618,26 @@
                     'section.works': 'Works',
                     'section.skills': 'Skills',
                     'section.achievements': 'Achievements',
+                    'section.contact': 'Contact / Collaboration',
+                    'contact.ariaLabel': '連絡・共同制作',
+                    'contact.kicker': 'OPEN TO CONVERSATIONS',
+                    'contact.title': '一緒につくる、考える。',
+                    'contact.description': '作品についての質問、共同制作、研究・学習の相談は、XまたはGmailから気軽に連絡してください。',
+                    'contact.x.title': 'X / Collaboration',
+                    'contact.x.description': '共同制作・研究・相談',
+                    'contact.email.title': 'Gmail / Contact',
+                    'contact.email.description': 'メールでの問い合わせ・連絡',
                     'work.title': '放射壊変シミュレーター',
                     'work.description': '確率的な原子核崩壊と半減期を視覚的に観察できるシミュレーター',
                     'work.previewAlt': 'Phenomena Foundation v1のプレビュー',
                     'skill.nuclear': '原子力物理',
                     'skill.math': '競技数学',
+                    'skill.nuclearLabel': '01 / NUCLEAR PHYSICS',
+                    'skill.mathLabel': '02 / COMPETITIVE MATH',
+                    'skill.cppLabel': '03 / PROGRAMMING',
+                    'skill.nuclearNote': '壊変・核種・放射線',
+                    'skill.mathNote': '論理・確率・最適化',
+                    'skill.cppNote': 'アルゴリズム・実装',
                     'ach.inso': '国際原子力科学オリンピック（INSO）2026 サウジアラビア大会',
                     'ach.aplo': 'アジア太平洋言語学オリンピック (APLO)',
                     'ach.jol': '日本言語学オリンピック (JOL)',
@@ -579,11 +668,26 @@
                     'section.works': 'Works',
                     'section.skills': 'Skills',
                     'section.achievements': 'Achievements',
+                    'section.contact': 'Contact / Collaboration',
+                    'contact.ariaLabel': 'Contact and collaboration',
+                    'contact.kicker': 'OPEN TO CONVERSATIONS',
+                    'contact.title': 'Build, think, and learn together.',
+                    'contact.description': 'For questions, collaborations, or research and learning conversations, feel free to reach out via X or Gmail.',
+                    'contact.x.title': 'X / Collaboration',
+                    'contact.x.description': 'Collaboration, research, and questions',
+                    'contact.email.title': 'Gmail / Contact',
+                    'contact.email.description': 'Email inquiries and contact',
                     'work.title': 'Nuclear Decay Simulator',
                     'work.description': 'An interactive simulator for visualizing stochastic nuclear decay and half-life.',
                     'work.previewAlt': 'Preview of Phenomena Foundation v1',
                     'skill.nuclear': 'Nuclear Physics',
                     'skill.math': 'Competitive Mathematics',
+                    'skill.nuclearLabel': '01 / NUCLEAR PHYSICS',
+                    'skill.mathLabel': '02 / COMPETITIVE MATH',
+                    'skill.cppLabel': '03 / PROGRAMMING',
+                    'skill.nuclearNote': 'Decay, nuclides, radiation',
+                    'skill.mathNote': 'Logic, probability, optimization',
+                    'skill.cppNote': 'Algorithms and implementation',
                     'ach.inso': 'International Nuclear Science Olympiad (INSO) 2026 — Saudi Arabia',
                     'ach.aplo': 'Asia Pacific Linguistics Olympiad (APLO)',
                     'ach.jol': 'Japan Linguistics Olympiad (JOL)',
@@ -843,3 +947,4 @@ void dijkstra(int s, vector<ll>& d, const vector<vector<pair<int, ll>>>& G) {
     </script>
 </body>
 </html>
+
